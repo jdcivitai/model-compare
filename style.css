@@ -1,0 +1,65 @@
+/* Model Compare Extension - UI Styles */
+
+#compare_generate_btn {
+    height: 48px !important;
+    font-size: 1.1em !important;
+    font-weight: 600 !important;
+}
+
+#compare_checkpoints {
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+#compare_gallery {
+    min-height: 400px;
+}
+
+/* Model name captions under each image in the compare gallery */
+#compare_gallery .caption {
+    font-size: 0.9em !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+}
+
+#compare_info_html {
+    margin-top: 8px;
+    font-size: 0.85em;
+    color: #666;
+}
+
+#compare_error_html {
+    margin-top: 4px;
+    color: #c00;
+    font-size: 0.85em;
+}
+
+#compare_refresh_checkpoints,
+#compare_refresh_loras {
+    min-width: 32px !important;
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+}
+
+/* LoRA search box - compact styling */
+#compare_lora_search {
+    font-size: 0.85em !important;
+}
+
+#compare_lora_search label {
+    font-size: 0.85em !important;
+}
+
+#compare_lora_search .h-full {
+    min-height: 2rem !important;
+}
+
+/* LoRA checkbox group - expand to fit all items */
+#compare_lora {
+    max-height: none !important;
+    overflow: visible !important;
+}
