@@ -20,66 +20,74 @@ from ldm_patched.modules import model_management
 
 
 # ─── Preset Management ────────────────────────────────────────────────────────
-
-# Store presets in configs/presets/ so they survive extension updates
-_presets_dir = os.path.join(shared.script_path, "configs", "presets")
-
-PRESET_PARAMS = [
-    "prompt", "negative_prompt", "sampler_name", "scheduler",
-    "steps", "cfg_scale", "width", "height", "batch_count",
-    "clip_skip",
-]
-
-DEFAULT_PRESET = {
-    "prompt": "",
-    "negative_prompt": "",
-    "sampler_name": "Euler a",
-    "scheduler": "Automatic",
-    "steps": 20,
-    "cfg_scale": 7.0,
-    "width": 512,
-    "height": 512,
-    "batch_count": 1,
-    "clip_skip": 1,
-}
+# Try to use the main UI's preset system (modules/presets.py) if available.
+# Otherwise fall back to the extension's own preset code using the same directory.
 
 
-def _ensure_presets_dir():
-    os.makedirs(_presets_dir, exist_ok=True)
+def _try_import_main_ui_presets():
+    """Attempt to import load_preset from the main UI's preset module."""
+    try:
+        from modules.presets import load_preset as lp
+        return lp
+    except ImportError:
+        return None
 
 
-def _normalize_checkpoint_name(checkpoint_name):
-    """Strip hash suffix and sanitize for filesystem safety."""
-    base = checkpoint_name
-    bracket_idx = checkpoint_name.rfind(" [")
-    if bracket_idx > 0:
-        base = checkpoint_name[:bracket_idx]
-    safe_name = base
-    for ch in ["/", "\\", ":", "*", "?", '"', "<", ">", "|"]:
-        safe_name = safe_name.replace(ch, "_")
-    return safe_name
+_main_ui_load_preset = _try_import_main_ui_presets()
 
+if _main_ui_load_preset is not None:
+    # Use the main UI's preset system directly
+    load_preset = _main_ui_load_preset
+else:
+    # Fall back to internal preset system — same directory as the main UI uses
+    _presets_dir = os.path.join(shared.script_path, "presets")
 
-def _preset_filename(checkpoint_name):
-    safe_name = _normalize_checkpoint_name(checkpoint_name)
-    return os.path.join(_presets_dir, f"{safe_name}.json")
+    DEFAULT_PRESET = {
+        "prompt": "",
+        "negative_prompt": "",
+        "sampler_name": "Euler a",
+        "scheduler": "Automatic",
+        "steps": 20,
+        "cfg_scale": 7.0,
+        "width": 512,
+        "height": 512,
+        "batch_count": 1,
+        "clip_skip": 1,
+    }
 
+    def _ensure_presets_dir():
+        os.makedirs(_presets_dir, exist_ok=True)
 
-def load_preset(checkpoint_name):
-    """Load a preset for the given checkpoint. Returns dict or defaults."""
-    _ensure_presets_dir()
-    filepath = _preset_filename(checkpoint_name)
-    if os.path.exists(filepath):
-        try:
-            import json
-            with open(filepath, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            result = DEFAULT_PRESET.copy()
-            result.update(data)
-            return result
-        except Exception as e:
-            print(f"[Model Compare] Warning: Failed to load preset for '{checkpoint_name}': {e}")
-    return DEFAULT_PRESET.copy()
+    def _normalize_checkpoint_name(checkpoint_name):
+        base = checkpoint_name
+        bracket_idx = checkpoint_name.rfind(" [")
+        if bracket_idx > 0:
+            base = checkpoint_name[:bracket_idx]
+        safe_name = base
+        for ch in ["/", "\\", ":", "*", "?", '"', "<", ">", "|"]:
+            safe_name = safe_name.replace(ch, "_")
+        return safe_name
+
+    def _preset_filename(checkpoint_name):
+        safe_name = _normalize_checkpoint_name(checkpoint_name)
+        return os.path.join(_presets_dir, f"{safe_name}.json")
+
+    def load_preset(checkpoint_name):
+        """Load a preset for the given checkpoint. Returns dict or defaults."""
+        _ensure_presets_dir()
+        filepath = _preset_filename(checkpoint_name)
+        if os.path.exists(filepath):
+            try:
+                import json
+                with open(filepath, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                result = DEFAULT_PRESET.copy()
+                result.update(data)
+                return result
+            except Exception as e:
+                print(f"[Model Compare] Warning: Failed to load preset for '{checkpoint_name}': {e}")
+        return DEFAULT_PRESET.copy()
+
 
 
 # ─── NullScripts Wrapper ──────────────────────────────────────────────────────
