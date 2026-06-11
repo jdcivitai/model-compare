@@ -17,7 +17,7 @@ Generate images with the same prompt across multiple checkpoints and display the
 
 ```bash
 cd extensions
-git clone https://github.com/your-username/model-compare.git
+git clone https://github.com/jdcivitai/model-compare.git
 ```
 
 ### Option 2: Manual Install
