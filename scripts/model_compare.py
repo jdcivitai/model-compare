@@ -150,6 +150,12 @@ class NullScripts:
     def on_mask_blend(self, p, **kwargs):
         pass
 
+    def process_before_every_step(self, p, **kwargs):
+        pass
+
+    def setup(self, p, **kwargs):
+        pass
+
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 
