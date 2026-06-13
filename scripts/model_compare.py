@@ -99,6 +99,9 @@ class NullScripts:
     """No-op scripts object that safely bypasses the script system."""
     alwayson_scripts = []
 
+    def setup_scrips(self, p, **kwargs):
+        pass
+
     def before_process(self, p, **kwargs):
         pass
 
@@ -108,6 +111,9 @@ class NullScripts:
     def before_process_batch(self, p, **kwargs):
         pass
 
+    def process_before_every_sampling(self, p, **kwargs):
+        pass
+
     def process_batch(self, p, **kwargs):
         pass
 
@@ -115,6 +121,9 @@ class NullScripts:
         pass
 
     def postprocess_batch(self, p, **kwargs):
+        pass
+
+    def postprocess_batch_list(self, p, **kwargs):
         pass
 
     def postprocess_image(self, p, **kwargs):
@@ -130,6 +139,15 @@ class NullScripts:
         pass
 
     def after_extra_networks_activate(self, p, **kwargs):
+        pass
+
+    def before_hr(self, p, **kwargs):
+        pass
+
+    def before_process_init_images(self, p, **kwargs):
+        pass
+
+    def on_mask_blend(self, p, **kwargs):
         pass
 
 
