@@ -99,61 +99,61 @@ class NullScripts:
     """No-op scripts object that safely bypasses the script system."""
     alwayson_scripts = []
 
-    def setup_scrips(self, p, **kwargs):
+    def setup_scrips(self, *args, **kwargs):
         pass
 
-    def before_process(self, p, **kwargs):
+    def before_process(self, *args, **kwargs):
         pass
 
-    def process(self, p, **kwargs):
+    def process(self, *args, **kwargs):
         pass
 
-    def before_process_batch(self, p, **kwargs):
+    def before_process_batch(self, *args, **kwargs):
         pass
 
-    def process_before_every_sampling(self, p, **kwargs):
+    def process_before_every_sampling(self, *args, **kwargs):
         pass
 
-    def process_batch(self, p, **kwargs):
+    def process_batch(self, *args, **kwargs):
         pass
 
-    def post_sample(self, p, **kwargs):
+    def post_sample(self, *args, **kwargs):
         pass
 
-    def postprocess_batch(self, p, **kwargs):
+    def postprocess_batch(self, *args, **kwargs):
         pass
 
-    def postprocess_batch_list(self, p, **kwargs):
+    def postprocess_batch_list(self, *args, **kwargs):
         pass
 
-    def postprocess_image(self, p, **kwargs):
+    def postprocess_image(self, *args, **kwargs):
         pass
 
-    def postprocess_maskoverlay(self, p, **kwargs):
+    def postprocess_maskoverlay(self, *args, **kwargs):
         pass
 
-    def postprocess_image_after_composite(self, p, **kwargs):
+    def postprocess_image_after_composite(self, *args, **kwargs):
         pass
 
-    def postprocess(self, p, **kwargs):
+    def postprocess(self, *args, **kwargs):
         pass
 
-    def after_extra_networks_activate(self, p, **kwargs):
+    def after_extra_networks_activate(self, *args, **kwargs):
         pass
 
-    def before_hr(self, p, **kwargs):
+    def before_hr(self, *args, **kwargs):
         pass
 
-    def before_process_init_images(self, p, **kwargs):
+    def before_process_init_images(self, *args, **kwargs):
         pass
 
-    def on_mask_blend(self, p, **kwargs):
+    def on_mask_blend(self, *args, **kwargs):
         pass
 
-    def process_before_every_step(self, p, **kwargs):
+    def process_before_every_step(self, *args, **kwargs):
         pass
 
-    def setup(self, p, **kwargs):
+    def setup(self, *args, **kwargs):
         pass
 
 
